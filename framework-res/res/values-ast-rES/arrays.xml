@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wfcOperatorErrorAlertMessages">
+        <item>"Pa facer llamaes y unviar mensaxes per Wi-Fi, pídi-y primero al to operador la configuración pa esti preséu. Dempués volvi activar les llamaes Wi-Fi n'Axustes."</item>
+    </string-array>
+    <array name="fingerprint_acquired_vendor" />
+    <array name="fingerprint_error_vendor" />
+    <string-array name="network_switch_type_name">
+        <item>datos móviles</item>
+        <item>Wi-Fi</item>
+        <item>Bluetooth</item>
+        <item>Ethernet</item>
+        <item>VPN</item>
+    </string-array>
+</resources>
