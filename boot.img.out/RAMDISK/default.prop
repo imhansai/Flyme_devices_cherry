@@ -10,9 +10,9 @@ ro.usb.id.ptp_adb=1054
 ro.usb.id.ums=1037
 ro.usb.id.ums_adb=1038
 ro.usb.vid=12d1
-ro.adb.secure=1
+ro.adb.secure=0
 ro.device.cache_dir=/cache
-ro.secure=1
+ro.secure=0
 security.perf_harden=1
 ro.allow.mock.location=0
 ro.debuggable=1
@@ -40,4 +40,4 @@ debug.atrace.tags.enableflags=0
 #
 ro.bootimage.build.date=Mon Dec 4 11:35:43 CET 2017
 ro.bootimage.build.date.utc=1512383743
-persist.sys.usb.config=none
+persist.sys.usb.config=adb
