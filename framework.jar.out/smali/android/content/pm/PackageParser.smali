@@ -6,6 +6,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Landroid/content/pm/PackageParser$FlymeInjector;,
         Landroid/content/pm/PackageParser$Activity;,
         Landroid/content/pm/PackageParser$ActivityIntentInfo;,
         Landroid/content/pm/PackageParser$ApkLite;,
@@ -4746,7 +4747,7 @@
 
     move-result-object v2
 
-    const v3, 0x107000e
+    const v3, #android:array@power_off_alarm_apps#t
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -5271,6 +5272,12 @@
     move-result v5
 
     iput v5, v4, Landroid/content/pm/ActivityInfo;->uiOptions:I
+
+    move-object/from16 v0, v17
+
+    move-object/from16 v1, v24
+
+    invoke-static/range {v0 .. v1}, Landroid/content/pm/PackageParser$FlymeInjector;->parseAccessArgsFromResource(Landroid/content/pm/PackageParser$Activity;Landroid/content/res/TypedArray;)V
 
     .line 3482
     const/16 v4, 0x1b
@@ -6593,6 +6600,8 @@
     .local v19, "outerDepth":I
     :cond_27
     :goto_8
+    :goto_flyme_0
+
     invoke-interface/range {p3 .. p3}, Landroid/content/res/XmlResourceParser;->next()I
 
     move-result v27
@@ -6915,14 +6924,18 @@
 
     iput-object v4, v0, Landroid/content/pm/PackageParser$Activity;->metaData:Landroid/os/Bundle;
 
-    if-nez v4, :cond_27
+    if-nez v4, :cond_flyme_0
 
-    .line 3721
     const/4 v4, 0x0
 
     return-object v4
 
-    .line 3723
+    :cond_flyme_0
+
+    invoke-static/range {v17 .. v17}, Landroid/content/pm/PackageParser$FlymeInjector;->parseAccessMetaFromResource(Landroid/content/pm/PackageParser$Activity;)V
+
+    goto/16 :goto_flyme_0
+
     :cond_30
     if-nez p6, :cond_31
 
@@ -7697,6 +7710,12 @@
     move-object/from16 v0, v20
 
     iput-boolean v4, v0, Landroid/content/pm/ActivityInfo;->encryptionAware:Z
+
+    move-object/from16 v0, v20
+
+    move-object/from16 v1, v28
+
+    invoke-static/range {v0 .. v1}, Landroid/content/pm/PackageParser$FlymeInjector;->copyAccessArgs(Landroid/content/pm/ActivityInfo;Landroid/content/pm/PackageParser$Activity;)V
 
     .line 3884
     new-instance v18, Landroid/content/pm/PackageParser$Activity;
@@ -16153,7 +16172,7 @@
 
     move-result-object v15
 
-    const v16, 0x11200d0
+    const v16, #android:bool@config_useRoundIcon#t
 
     invoke-virtual/range {v15 .. v16}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -18625,7 +18644,7 @@
 
     move-result-object v8
 
-    const v9, 0x11200d0
+    const v9, #android:bool@config_useRoundIcon#t
 
     invoke-virtual {v8, v9}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -24578,20 +24597,29 @@
     .param p2, "requireFilename"    # Z
 
     .prologue
-    .line 1411
+
+    invoke-static/range {p0 .. p0}, Landroid/content/pm/PackageParser$FlymeInjector;->validateName(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_flyme_0
+
+    const/4 v0, 0x0
+
+    return-object v0
+
+    :cond_flyme_0
+
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
 
-    .line 1412
     .local v0, "N":I
     const/4 v3, 0x0
 
-    .line 1413
     .local v3, "hasSep":Z
     const/4 v2, 0x1
 
-    .line 1414
     .local v2, "front":Z
     const/4 v4, 0x0
 
