@@ -154,17 +154,14 @@
 
     if-eqz v1, :cond_0
 
-    .line 186
     invoke-virtual {p0, v0, v3, v4}, Lcom/android/server/MzInputMethodManagerService;->flymeInvokeMethodSetSelectedInputMethodAndSubtypeLocked(Landroid/view/inputmethod/InputMethodInfo;IZ)V
 
-    .line 187
     return-void
 
-    .line 191
     :cond_0
     iget-object v1, p0, Lcom/android/server/MzInputMethodManagerService;->mMethodMap:Ljava/util/HashMap;
 
-    const-string/jumbo v2, "com.cootek.smartinputv5/com.cootek.smartinput5.TouchPalIME"
+    const-string v2, "com.emoji.keyboard.touchpal/com.cootek.smartinput5.TouchPalIME"
 
     invoke-virtual {v1, v2}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 

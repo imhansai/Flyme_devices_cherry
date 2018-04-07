@@ -335,11 +335,6 @@
 
 
 # instance fields
-.field mAccessActivity:Landroid/content/pm/ActivityInfo;
-
-.field mAccessComponentName:Landroid/content/ComponentName;
-
-.field mAccessInfo:Landroid/content/pm/ResolveInfo;
 
 .field mFlymePackageDOS:Lcom/android/server/pm/PackageDefaultOpService;
 
@@ -10458,12 +10453,6 @@
 
     :cond_2
     :try_start_1
-    invoke-static/range {v2 .. v2}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->isResetFlymeRuntimePermissions(Landroid/content/pm/PackageParser$Package;)Z
-
-    move-result v5
-
-    if-nez v5, :cond_flyme_0
-
     iget-object v3, v2, Landroid/content/pm/PackageParser$Package;->mExtras:Ljava/lang/Object;
 
     check-cast v3, Lcom/android/server/pm/PackageSetting;
@@ -10472,8 +10461,6 @@
     invoke-direct {p0, v3, p2}, Lcom/android/server/pm/PackageManagerService;->resetUserChangesToRuntimePermissionsAndFlagsLPw(Lcom/android/server/pm/PackageSetting;I)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    :cond_flyme_0
 
     monitor-exit v6
 
@@ -23822,14 +23809,13 @@
 
     invoke-static/range {v25 .. v26}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 10158
     :cond_4
+    :goto_flyme_0
     :goto_2
     add-int/lit8 v13, v13, 0x1
 
     goto :goto_1
 
-    .line 10148
     .end local v4    # "N":I
     .end local v7    # "bp":Lcom/android/server/pm/BasePermission;
     .end local v13    # "i":I
@@ -24520,13 +24506,16 @@
     .end local v22    # "revokeOnUpgrade":Z
     :cond_17
     :goto_b
+
     move-object/from16 v0, p1
 
     move-object/from16 v1, v19
 
     move/from16 v2, v24
 
-    invoke-static {v0, v1, v7, v2}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->grantFlymeRuntimePermission(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PermissionsState;Lcom/android/server/pm/BasePermission;I)V
+    invoke-static {v0, v1, v7, v2, v11}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->grantFlymeRuntimePermission(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PermissionsState;Lcom/android/server/pm/BasePermission;II)I
+
+    move-result v11
 
     move-object/from16 v0, v19
 
@@ -24725,16 +24714,13 @@
 
     invoke-virtual {v0, v7, v1, v2, v3}, Lcom/android/server/pm/PermissionsState;->updatePermissionFlags(Lcom/android/server/pm/BasePermission;III)Z
 
-    .line 10356
     const/4 v8, 0x1
 
-    .line 10361
     :cond_1e
     and-int/lit8 v25, v11, 0x8
 
-    if-nez v25, :cond_4
+    if-nez v25, :cond_flyme_0
 
-    .line 10362
     const/16 v25, 0x0
 
     array-length v0, v10
@@ -24746,7 +24732,7 @@
 
     move/from16 v1, v26
 
-    if-ge v0, v1, :cond_4
+    if-ge v0, v1, :cond_flyme_0
 
     aget v24, v10, v25
 
@@ -24760,37 +24746,43 @@
 
     move-result v27
 
-    .line 10364
     const/16 v28, -0x1
 
-    .line 10363
     move/from16 v0, v27
 
     move/from16 v1, v28
 
     if-eq v0, v1, :cond_1f
 
-    .line 10366
     move-object/from16 v0, v19
 
     move/from16 v1, v24
 
     invoke-virtual {v0, v7, v1, v11, v11}, Lcom/android/server/pm/PermissionsState;->updatePermissionFlags(Lcom/android/server/pm/BasePermission;III)Z
 
-    .line 10369
     move/from16 v0, v24
 
     invoke-static {v9, v0}, Lcom/android/internal/util/ArrayUtils;->appendInt([II)[I
 
     move-result-object v9
 
-    .line 10362
     :cond_1f
     add-int/lit8 v25, v25, 0x1
 
     goto :goto_d
 
-    .line 10349
+    :cond_flyme_0
+
+    move-object/from16 v0, p1
+
+    move-object/from16 v1, v19
+
+    invoke-static {v0, v1, v7, v9}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->grantFlymeRuntimePermission(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/PermissionsState;Lcom/android/server/pm/BasePermission;[I)[I
+
+    move-result-object v9
+
+    goto/16 :goto_flyme_0
+
     .end local v11    # "flags":I
     .end local v24    # "userId":I
     :cond_20
@@ -25615,6 +25607,7 @@
     .local v0, "allowed":Z
     :cond_0
     :goto_0
+
     invoke-static {p2, p3, v0}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->grantExternalSystemPackagePermission(Landroid/content/pm/PackageParser$Package;Lcom/android/server/pm/BasePermission;Z)Z
 
     move-result v0
@@ -46977,7 +46970,7 @@
 
     iget-object v4, v0, Lcom/android/server/pm/PackageManagerService;->mResolveActivity:Landroid/content/pm/ActivityInfo;
 
-    const-class v11, Lcom/android/internal/app/MzResolverActivity;
+    const-class v11, Lcom/android/internal/app/ResolverActivity;
 
     invoke-virtual {v11}, Ljava/lang/Class;->getName()Ljava/lang/String;
 
@@ -47139,8 +47132,6 @@
     move-object/from16 v0, p0
 
     iput-object v4, v0, Lcom/android/server/pm/PackageManagerService;->mResolveComponentName:Landroid/content/ComponentName;
-
-    invoke-static/range {p0 .. p0}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->scanPackageForAccessControl(Lcom/android/server/pm/PackageManagerService;)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
@@ -74324,10 +74315,6 @@
     :cond_3
     monitor-exit v1
 
-    invoke-static/range {p0 .. p1}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->getAccessActivityInfo(Lcom/android/server/pm/PackageManagerService;Landroid/content/ComponentName;)Landroid/content/pm/ActivityInfo;
-
-    move-result-object v8
-
     return-object v8
 
     .end local v6    # "a":Landroid/content/pm/PackageParser$Activity;
@@ -81988,18 +81975,11 @@
     if-eqz v0, :cond_1
 
     :cond_0
-    :cond_flyme_0
     const/4 v0, 0x5
 
     invoke-direct {p0, v1, v1, v0}, Lcom/android/server/pm/PackageManagerService;->updatePermissionsLPw(Ljava/lang/String;Landroid/content/pm/PackageParser$Package;I)V
 
     :cond_1
-    invoke-static {}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->isResetFlymeRuntimePermissions()Z
-
-    move-result v0
-
-    if-nez v0, :cond_flyme_0
-
     return-void
 .end method
 
@@ -83994,15 +83974,7 @@
 
     invoke-direct {p0, p1}, Lcom/android/server/pm/PackageManagerService;->primeDomainVerificationsLPw(I)V
 
-    invoke-static {}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->isResetFlymeRuntimePermissions()Z
-
-    move-result v2
-
-    if-nez v2, :cond_flyme_0
-
     invoke-direct {p0, p1}, Lcom/android/server/pm/PackageManagerService;->resetUserChangesToRuntimePermissionsAndFlagsLPw(I)V
-
-    :cond_flyme_0
 
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageManagerService;->scheduleWritePackageRestrictionsLocked(I)V
     :try_end_1
@@ -84050,16 +84022,6 @@
     const-string v9, "revokeRuntimePermission"
 
     invoke-virtual {v7, v8, v9}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
-
-    invoke-static {}, Lcom/android/server/pm/PackageManagerService$FlymePackageManagerServiceInjector;->isResetFlymeRuntimePermissions()Z
-
-    move-result v7
-
-    if-eqz v7, :cond_flyme_0
-
-    return-void
-
-    :cond_flyme_0
 
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
@@ -89329,16 +89291,6 @@
     invoke-direct/range {p0 .. p6}, Lcom/android/server/pm/PackageManagerService;->findPersistentPreferredActivityLP(Landroid/content/Intent;Ljava/lang/String;ILjava/util/List;ZI)Landroid/content/pm/ResolveInfo;
 
     move-result-object v0
-
-    return-object v0
-.end method
-
-.method public getAccessInfo(I)Landroid/content/pm/ResolveInfo;
-    .locals 1
-    .param p1, "userId"    # I
-
-    .prologue
-    iget-object v0, p0, Lcom/android/server/pm/PackageManagerService;->mAccessInfo:Landroid/content/pm/ResolveInfo;
 
     return-object v0
 .end method

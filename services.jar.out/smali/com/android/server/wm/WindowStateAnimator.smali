@@ -2328,8 +2328,6 @@
     move-result v0
 
     .local v0, "shown":Z
-    invoke-static/range {p0 .. p0}, Lcom/android/server/wm/WindowStateAnimator$FlymeInjector;->showWindow(Lcom/android/server/wm/WindowStateAnimator;)V
-
     if-nez v0, :cond_1
 
     return v5
@@ -6705,8 +6703,6 @@
 
     invoke-virtual {v4, v8}, Lcom/android/server/wm/WindowSurfaceController;->setShown(Z)V
 
-    invoke-static/range {p0 .. p0}, Lcom/android/server/wm/WindowStateAnimator$FlymeInjector;->destoryWindow(Lcom/android/server/wm/WindowStateAnimator;)V
-
     :cond_6
     iput-object v7, p0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceController:Lcom/android/server/wm/WindowSurfaceController;
 
@@ -7660,8 +7656,6 @@
     iget-object v0, p0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceController:Lcom/android/server/wm/WindowSurfaceController;
 
     invoke-virtual {v0, p1}, Lcom/android/server/wm/WindowSurfaceController;->hideInTransaction(Ljava/lang/String;)V
-
-    invoke-static/range {p0 .. p0}, Lcom/android/server/wm/WindowStateAnimator$FlymeInjector;->hideWindow(Lcom/android/server/wm/WindowStateAnimator;)V
 
     :cond_0
     return-void
